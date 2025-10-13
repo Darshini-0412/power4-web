@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"html/template"
 	"strconv"
-	"power4/game"
 )
 
 var currentGame = game.NewGame()
