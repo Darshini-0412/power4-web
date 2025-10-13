@@ -1,9 +1,10 @@
 package main
 
 import (
+	"html/template"
 	"log"
 	"net/http"
-	"html/template"
+	"power4/game"
 	"strconv"
 )
 
@@ -18,7 +19,6 @@ func main() {
 	log.Println("Serveur lancé sur http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
-
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
@@ -35,5 +35,5 @@ func playHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
-	
+
 }
