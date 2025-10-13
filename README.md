@@ -23,8 +23,8 @@ Assurez-vous d’avoir Go 1.12+ installé sur votre machine.
 
 #### 📦 Cloner le dépôt
 ```bash
-git clone https://github.com/Darshini-0412/PUISSANCE-4-MMA.git
-cd PUISSANCE-4-MMA
+git clone https://github.com/Darshini-0412/power4-web.git
+cd power4-web
 
 ---
 
