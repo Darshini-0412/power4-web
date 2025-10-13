@@ -1,109 +1,65 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
+/*  Reset & base */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif;
+  color: #0a0a0a; background: #f6f7fb; line-height: 1.5;
+}
+
+/* Layout */
+.page { min-height: 100dvh; display: grid; grid-template-rows: auto 1fr auto; }
+.container { max-width: 960px; margin: 0 auto; padding: 16px; }
+.header, .footer { padding: 16px; text-align: center; }
+.title { margin: 8px 0 4px; font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 800; }
+.subtitle { margin: 0; color: #4d5562; }
+
+.card { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; box-shadow: 0 6px 20px rgba(10,10,10,0.05); }
+.rules { margin: 8px 0 0; padding-left: 18px; }
+.rules li { margin: 6px 0; }
+
+.actions { margin-top: 12px; display: flex; gap: 8px; }
+.btn { appearance: none; border: 1px solid transparent; border-radius: 10px; padding: 10px 14px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+.btn.primary { background: #0f766e; color: #fff; }
+.btn.primary:hover { background: #0b5f59; }
+
+/* Playbar */
+.playbar { display: grid; gap: 10px; margin: 10px 0 16px; }
+.columns { display: grid; grid-template-columns: repeat(7, minmax(38px, 1fr)); gap: 8px; justify-items: center; }
+.playform { width: 100%; display: flex; }
+.col-btn { width: 100%; padding: 8px 0; border-radius: 8px; border: 1px solid #d1d5db; background: #ffffff; font-size: 18px; cursor: pointer; transition: background .2s, transform .05s; }
+.col-btn:hover { background: #f3f4f6; }
+.col-btn:active { transform: translateY(1px); }
+
+/* Board wrapper */
+.board-wrapper { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 20px; padding: 16px; box-shadow: 0 8px 28px rgba(10,10,10,0.06); }
+
+/* Table-based grid */
+.board {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 8px; /* espace entre cellules pour l'effet trou */
+  table-layout: fixed;
+}
+.board td {
   padding: 0;
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
-  color: white;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.container {
-  text-align: center;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  max-width: 600px;
-  width: 90%;
-}
-
-h1 {
-  margin-bottom: 20px;
-  font-size: 2.2em;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-
-.message {
-  font-size: 1.3em;
-  margin: 15px 0;
-  padding: 10px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-.board {
-  display: inline-block;
-  background: #0d47a1;
-  padding: 10px;
-  border-radius: 10px;
-  margin: 20px 0;
-}
-
-.row {
-  display: flex;
-}
-
+/* Cellules “trous” */
 .cell {
-  width: 50px;
-  height: 50px;
-  margin: 3px;
-  background: white;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+  background: #e5e7eb; /* trou vide */
+  box-shadow: inset 0 2px 6px rgba(0,0,0,.08);
 }
 
-.cell.player1 {
-  background: radial-gradient(circle at 30% 30%, #ff5252, #b71c1c);
-}
+/* Jetons */
+.token { width: 100%; height: 100%; border-radius: 50%; }
+.token.red { background: #e63946; }
+.token.yellow { background: #f1c40f; }
 
-.cell.player2 {
-  background: radial-gradient(circle at 30% 30%, #ffeb3b, #f57f17);
-}
-
-.play-form, .reset-form {
-  margin: 15px 0;
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-}
-
-select, button {
-  padding: 8px 16px;
-  font-size: 1em;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-button {
-  background: #4caf50;
-  color: white;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background: #388e3c;
-}
-
-.reset-form button {
-  background: #9e9e9e;
-}
-
-.reset-form button:hover {
-  background: #616161;
+/* Responsive */
+@media (max-width: 640px) {
+  .cell { width: 44px; height: 44px; }
+  .board { border-spacing: 6px; }
 }
