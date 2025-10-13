@@ -1,3 +1,3 @@
-module puissance-4
+module power4
 
 go 1.25.1
