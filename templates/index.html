@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Puissance 4</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🔴🟡 Puissance 4 🟡🔴</h1>
+
+    <div class="message">{{.Message}}</div>
+
+    <div class="board">
+      {{range $r, $row := .Grid}}
+        <div class="row">
+          {{range $c, $cell := $row}}
+            <div class="cell 
+              {{if eq $cell 1}}player1
+              {{else if eq $cell 2}}player2
+              {{end}}">
+            </div>
+          {{end}}
+        </div>
+      {{end}}
+    </div>
+
+    {{if not .GameOver}}
+    <form method="POST" action="/play" class="play-form">
+      <label for="col">Choisis une colonne :</label>
+      <select name="col" id="col" required>
+        {{range .ValidColumns}}
+          <option value="{{.}}">{{.}}</option>
+        {{end}}
+      </select>
+      <button type="submit">Jouer</button>
+    </form>
+    {{end}}
+
+    <form method="POST" action="/reset" class="reset-form">
+      <button type="submit">🔄 Nouvelle partie</button>
+    </form>
+  </div>
+</body>
+</html>
