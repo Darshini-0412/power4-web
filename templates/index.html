@@ -1,46 +1,127 @@
-<!DOCTYPE html>
+ <!-- templates/index.html -->
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Puissance 4</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <meta charset="utf-8" />
+  <title>Power 4 Web — Jour 1 (statique)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../static/style.css" />
 </head>
-<body>
-  <div class="container">
-    <h1>🔴🟡 Puissance 4 🟡🔴</h1>
+<body class="page">
+  <header class="header">
+    <h1 class="title">Power 4 Web</h1>
+    <p class="subtitle">Interface Web — Version statique (Jour 1)</p>
+  </header>
 
-    <div class="message">{{.Message}}</div>
+  <main class="container">
+    <section class="card">
+      <h2>Règles (résumé)</h2>
+      <ul class="rules">
+        <li>Deux joueurs : Rouge 🔴 et Jaune 🟡.</li>
+        <li>Joue en choisissant une <strong>colonne</strong>.</li>
+        <li>4 jetons alignés = victoire (H/V/Diagonale).</li>
+        <li>Grille pleine sans alignement = match nul.</li>
+      </ul>
 
-    <div class="board">
-      {{range $r, $row := .Grid}}
-        <div class="row">
-          {{range $c, $cell := $row}}
-            <div class="cell 
-              {{if eq $cell 1}}player1
-              {{else if eq $cell 2}}player2
-              {{end}}">
-            </div>
-          {{end}}
+      <div class="actions">
+        <!-- Bouton de départ symbolique, en statique -->
+        <a class="btn primary" href="#board">Voir le plateau</a>
+      </div>
+    </section>
+
+    <section id="board" class="card">
+      <h2>Plateau (statique) — 6 x 7</h2>
+
+      <!-- Barre de jeu (statique) -->
+      <div class="playbar">
+        <div class="columns">
+          <!-- 7 boutons, statiques pour l’instant -->
+          <button class="col-btn" aria-label="Colonne 1">↓</button>
+          <button class="col-btn" aria-label="Colonne 2">↓</button>
+          <button class="col-btn" aria-label="Colonne 3">↓</button>
+          <button class="col-btn" aria-label="Colonne 4">↓</button>
+          <button class="col-btn" aria-label="Colonne 5">↓</button>
+          <button class="col-btn" aria-label="Colonne 6">↓</button>
+          <button class="col-btn" aria-label="Colonne 7">↓</button>
         </div>
-      {{end}}
-    </div>
+      </div>
 
-    {{if not .GameOver}}
-    <form method="POST" action="/play" class="play-form">
-      <label for="col">Choisis une colonne :</label>
-      <select name="col" id="col" required>
-        {{range .ValidColumns}}
-          <option value="{{.}}">{{.}}</option>
-        {{end}}
-      </select>
-      <button type="submit">Jouer</button>
-    </form>
-    {{end}}
+      <!-- Grille 6x7 avec <table> (statique) -->
+      <div class="board-wrapper">
+        <table class="board" role="grid" aria-label="Grille Power 4">
+          <tbody>
+            <!-- 6 lignes -->
+            <!-- Ligne 1 -->
+            <tr>
+              <!-- 7 colonnes -->
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+            </tr>
+            <!-- Ligne 2 -->
+            <tr>
+              <td><div class="cell"></div></td>
+              <td><div class="cell token red"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell token yellow"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+            </tr>
+            <!-- Ligne 3 -->
+            <tr>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell token red"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell token yellow"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+            </tr>
+            <!-- Ligne 4 -->
+            <tr>
+              <td><div class="cell token yellow"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell token red"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell token yellow"></div></td>
+              <td><div class="cell"></div></td>
+            </tr>
+            <!-- Ligne 5 -->
+            <tr>
+              <td><div class="cell"></div></td>
+              <td><div class="cell token red"></div></td>
+              <td><div class="cell token yellow"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+            </tr>
+            <!-- Ligne 6 -->
+            <tr>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell token red"></div></td>
+              <td><div class="cell token yellow"></div></td>
+              <td><div class="cell"></div></td>
+              <td><div class="cell"></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-    <form method="POST" action="/reset" class="reset-form">
-      <button type="submit">🔄 Nouvelle partie</button>
-    </form>
-  </div>
+      <p class="hint">Version statique (démonstration visuelle). Demain → version dynamique via Go.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>Jour 1 — HTML/CSS statiques • Règle 2 (Interface)</small>
+  </footer>
 </body>
 </html>
