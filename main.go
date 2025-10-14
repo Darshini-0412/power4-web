@@ -20,7 +20,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-// 🔁 Inverse la grille pour affichage du bas vers le haut
+// 🔁 Inverse les lignes de la grille pour affichage de bas en haut
 func reverseGrid(grid [][]string) [][]string {
 	reversed := make([][]string, len(grid))
 	for i := range grid {
@@ -35,17 +35,36 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	tmpl := template.New("index.html").Funcs(template.FuncMap{
 		"seq": func(start, end int) []int {
-			s := make([]int, end-start+1)
-			for i := range s {
-				s[i] = start + i
+			s := []int{}
+			step := 1
+			if start > end {
+				step = -1
 			}
-			return s
-		},
+			for i := start; i != end+step; i += step {
+				s = append(s, i)
+			}
+		return s
+	},
 	})
-	tmpl = template.Must(tmpl.ParseFiles("templates/index.html"))
-	tmpl.Execute(w, struct{ Grid [][]string }{Grid: reverseGrid(currentGame.Grid)})
-}
 
+	tmpl = template.Must(tmpl.ParseFiles("templates/index.html"))
+	tmpl.Execute(w, struct {
+		Grid   [][]string
+		Turn   string
+		Winner string
+	}{
+		Grid:   reverseGrid(currentGame.Grid),
+		Turn:   currentGame.Turn,
+		Winner: func() string {
+			if currentGame.CheckWinner() != "" {
+				return currentGame.CheckWinner()
+			} else if currentGame.IsDraw() {
+				return "Draw"
+			}
+			return ""
+		}(),
+	})
+}
 // 🎮 Joue un coup dans la colonne choisie
 func playHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {

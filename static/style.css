@@ -31,7 +31,15 @@ body {
 .col-btn:active { transform: translateY(1px); }
 
 /* Board wrapper */
-.board-wrapper { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 20px; padding: 16px; box-shadow: 0 8px 28px rgba(10,10,10,0.06); }
+.board-wrapper { 
+  background: #ffffff;
+  border: 1px solid #e5e7eb; 
+  border-radius: 20px;
+   padding: 16px;
+    box-shadow: 0 8px 28px rgba(10,10,10,0.06);
+   margin-top: 100px; /*éloigne du haut*/
+   scroll-margin-top: 100px;
+}
 
 /* Table-based grid */
 .board {
@@ -57,9 +65,21 @@ body {
 .token { width: 100%; height: 100%; border-radius: 50%; }
 .token.red { background: #e63946; }
 .token.yellow { background: #f1c40f; }
+.token.empty {
+  background: #263044; /* bleu pour les cellules vides */
+}
 
-/* Responsive */
-@media (max-width: 640px) {
-  .cell { width: 44px; height: 44px; }
-  .board { border-spacing: 6px; }
+/* Bouton Rejouer */
+.replay-button {
+  background-color: #facc15;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+.replay-button:hover {
+  background-color: #fbbf24;
 }

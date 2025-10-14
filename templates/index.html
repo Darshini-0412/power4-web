@@ -1,15 +1,15 @@
- <!-- templates/index.html -->
+<!-- templates/index.html -->
 <!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <title>Power 4 Web — Jour 1</title>
+  <title>⭐Power 4 Web⭐</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../static/style.css" />
 </head>
 <body class="page">
   <header class="header">
-    <h1 class="title">Power 4 Web</h1>
+    <h1 class="title">⭐Power 4 Web⭐</h1>
   </header>
 
   <main class="container">
@@ -26,42 +26,68 @@
 
         <!-- 🔄 Bouton pour réinitialiser la partie -->
         <form action="/reset" method="POST">
-  <button type="submit">🔄 Réinitialiser la partie</button>
-</form>
+          <button type="submit">🔄 Réinitialiser la partie</button>
+        </form>
 
         <!-- 🎯 Flèches pour jouer dans chaque colonne -->
         <div class="playbar">
           <div class="columns">
             {{range $i := seq 0 6}}
-            <form class="playform" action="/play" method="POST">
-              <input type="hidden" name="column" value="{{$i}}">
-              <button class="col-btn" type="submit" aria-label="Colonne {{$i}}">↓</button>
-            </form>
+              <form class="playform" action="/play" method="POST">
+                <input type="hidden" name="column" value="{{$i}}">
+                <button class="col-btn" type="submit" aria-label="Colonne {{$i}}">↓</button>
+              </form>
             {{end}}
           </div>
         </div>
 
+        <!-- 🧠 Tour du joueur -->
+        <p class="turn">
+          Tour du joueur :
+          {{if eq .Turn "R"}}🔴 Rouge{{else}}🟡 Jaune{{end}}
+        </p>
+        <!-- 🏆 Message de victoire -->
+        {{if .Winner}}
+          <p class="winner">
+            {{if eq .Winner "R"}}🔴 Team Rouge a gagné ! 🥳
+            {{else if eq .Winner "Y"}}🟡 Team Jaune a gagné ! 🥳
+            {{else}}Match nul 😔{{end}} 
+          </p>
+            <!-- ✅ Bouton Rejouer -->
+          <form method="POST" action="/reset">
+            <button class="replay-button">🔄 Rejouer</button>
+          </form>
+        {{end}}
+
+        <p>Grille : {{len .Grid}} lignes</p>
+        <p>Colonnes dans ligne 0 : {{len (index .Grid 0)}}</p>
+
         <!-- 🧩 Grille du jeu -->
-        <div class="board-wrapper">
+        <div class="board-wrapper" id="grille">
           <table class="board" role="grid" aria-label="Grille Power 4">
             <tbody>
-              {{range .Grid}}
-              <tr>
-                {{range .}}
-                <td>
-                  <div class="cell">
-                    {{if eq . "R"}}<div class="token red"></div>{{end}}
-                    {{if eq . "Y"}}<div class="token yellow"></div>{{end}}
-                  </div>
-                </td>
-                {{end}}
-              </tr>
+              {{range $i := seq 5 0}} <!-- lignes de bas en haut -->
+                <tr>
+                  {{range $index, $cell := index $.Grid $i}} <!-- chaque cellule -->
+                    <td>
+                      <div class="cell">
+                        {{if eq $cell "R"}}
+                          <div class="token red"></div>
+                        {{else if eq $cell "Y"}}
+                          <div class="token yellow"></div>
+                        {{else}}
+                          <div class="token empty"></div>
+                        {{end}}
+                      </div>
+                    </td>
+                  {{end}}
+                </tr>
               {{end}}
             </tbody>
           </table>
-        </div>
-      </section>
-    </section>
+        </div> <!-- board-wrapper -->
+      </section> <!-- board -->
+    </section> <!-- card -->
   </main>
 </body>
 </html>
