@@ -122,10 +122,6 @@
     </div>
 </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <p>⭐ Power 4 Web — Créé avec passion ⭐</p>
-  </footer>
 
   <script>
     // Fonctions pour gérer le thème
@@ -267,65 +263,5 @@
     });
 </script>
 
-  <style>
-    /* Styles supplémentaires pour le footer et autres éléments */
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      background: var(--bg-card);
-      border-top: 1px solid var(--border-color);
-      color: var(--text-secondary);
-      margin-top: 2rem;
-    }
-
-    .debug-info {
-      margin: 1rem 0;
-      padding: 1rem;
-      background: var(--bg-card);
-      border-radius: var(--border-radius);
-      border: 1px solid var(--border-color);
-    }
-
-    .debug-info summary {
-      cursor: pointer;
-      font-weight: 600;
-      color: var(--text-secondary);
-    }
-
-    .debug-info p {
-      margin: 0.5rem 0;
-      font-size: 0.9em;
-      color: var(--text-secondary);
-    }
-
-    /* Amélioration de l'accessibilité */
-    @media (prefers-reduced-motion: reduce) {
-      .token:not(.empty) {
-        animation: none;
-      }
-      
-      .card:hover {
-        transform: none;
-      }
-      
-      button:hover, .col-btn:hover {
-        transform: none;
-      }
-    }
-
-    /* Styles d'impression */
-    @media print {
-      .theme-switcher,
-      .playbar,
-      form[action="/reset"] {
-        display: none;
-      }
-      
-      .card {
-        box-shadow: none;
-        border: 2px solid #000;
-      }
-    }
-  </style>
 </body>
 </html>
