@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⭐ Power 4 Web - Accueil ⭐</title>
+    <link rel="stylesheet" href="../static/home.css">
+</head>
+<body class="home-page">
+    <!-- Background animé -->
+    <div class="background-animation"></div>
+    
+    <!-- Toggle Thème -->
+    <div class="theme-switcher">
+        <button class="theme-btn" aria-label="Changer le thème" onclick="toggleTheme()">🌙</button>
+    </div>
+    
+    <!-- Header -->
+    <header class="home-header">
+        <div class="header-content">
+            <h1 class="main-title">
+                <span class="title-icon">⭐</span>
+                Power 4 Web
+                <span class="title-icon">⭐</span>
+            </h1>
+            <p class="subtitle">Le jeu légendaire revisité en version moderne</p>
+        </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="home-main">
+        <!-- Section Hero -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2>Prêt pour le défi ?</h2>
+                    <p>Affrontez vos amis dans ce classique intemporel du jeu de stratégie. Alignez 4 jetons et remportez la victoire !</p>
+                    
+                    <div class="cta-buttons">
+                        <a href="/game" class="btn btn-primary">
+                            🎮 Jouer Maintenant
+                        </a>
+                        <a href="#rules" class="btn btn-secondary">
+                            📖 Voir les Règles
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="game-preview">
+                        <div class="preview-board">
+                            <!-- Animation du plateau de jeu -->
+                            <div class="preview-row">
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                            </div>
+                            <div class="preview-row">
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                            </div>
+                            <div class="preview-row">
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token red"></div></div>
+                                <div class="preview-cell"><div class="preview-token yellow"></div></div>
+                                <div class="preview-cell"><div class="preview-token red"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                            </div>
+                            <div class="preview-row">
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token yellow"></div></div>
+                                <div class="preview-cell"><div class="preview-token red"></div></div>
+                                <div class="preview-cell"><div class="preview-token yellow"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                            </div>
+                            <div class="preview-row">
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token red"></div></div>
+                                <div class="preview-cell"><div class="preview-token yellow"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                            </div>
+                            <div class="preview-row">
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                                <div class="preview-cell"><div class="preview-token"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Features -->
+        <section class="features-section">
+            <div class="container">
+                <h2>Pourquoi jouer à Power 4 Web ?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Stratégie Pure</h3>
+                        <p>Développez vos compétences stratégiques en anticipant les coups de votre adversaire.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Rapide & Intense</h3>
+                        <p>Parties dynamiques qui allient réflexion rapide et prise de décision.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Design Moderne</h3>
+                        <p>Interface élégante avec mode clair/sombre et animations fluides.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Accessible Partout</h3>
+                        <p>Jouez sur tous vos appareils sans installation requise.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Rules -->
+        <section id="rules" class="rules-section">
+            <div class="container">
+                <h2>📋 Règles du Jeu</h2>
+                <div class="rules-content">
+                    <div class="rules-list">
+                        <div class="rule-item">
+                            <div class="rule-number">1</div>
+                            <div class="rule-text">
+                                <strong>Deux joueurs s'affrontent</strong> : Rouge 🔴 et Jaune 🟡
+                            </div>
+                        </div>
+                        
+                        <div class="rule-item">
+                            <div class="rule-number">2</div>
+                            <div class="rule-text">
+                                <strong>À tour de rôle</strong>, choisissez une colonne pour y lâcher votre jeton
+                            </div>
+                        </div>
+                        
+                        <div class="rule-item">
+                            <div class="rule-number">3</div>
+                            <div class="rule-text">
+                                <strong>Alignez 4 jetons</strong> horizontalement, verticalement ou en diagonale
+                            </div>
+                        </div>
+                        
+                        <div class="rule-item">
+                            <div class="rule-number">4</div>
+                            <div class="rule-text">
+                                <strong>Bloquez votre adversaire</strong> tout en construisant votre ligne
+                            </div>
+                        </div>
+                        
+                        <div class="rule-item">
+                            <div class="rule-number">5</div>
+                            <div class="rule-text">
+                                <strong>Grille pleine</strong> sans alignement = match nul
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="rules-visual">
+                        <div class="winning-examples">
+                            <div class="example">
+                                <h4>Horizontal</h4>
+                                <div class="example-board small">
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                    </div>
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token red"></div></div>
+                                        <div class="example-cell"><div class="example-token red"></div></div>
+                                        <div class="example-cell"><div class="example-token red"></div></div>
+                                        <div class="example-cell"><div class="example-token red"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                    </div>
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="example">
+                                <h4>Vertical</h4>
+                                <div class="example-board small">
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token yellow"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                    </div>
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token yellow"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                    </div>
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token yellow"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section CTA Final -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Commencez l'aventure !</h2>
+                <p>Relevez le défi et devenez le maître du Power 4</p>
+                <a href="/game" class="btn btn-large">
+                    🎮 Démarrer une Partie
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="home-footer">
+        <div class="container">
+            <p>⭐ Créé avec passion par l'équipe Power 4 Web ⭐</p>
+            <p class="footer-links">
+                <a href="/game">Jouer</a> • 
+                <a href="#rules">Règles</a> • 
+                <span class="version">Version 1.0</span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Gestion du thème
+        function initTheme() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeButton(theme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeButton(newTheme);
+        }
+
+        function updateThemeButton(theme) {
+            const themeBtn = document.querySelector('.theme-btn');
+            if (themeBtn) {
+                themeBtn.innerHTML = theme === 'light' ? '🌙' : '☀️';
+                themeBtn.setAttribute('aria-label', 
+                    theme === 'light' ? 'Activer le mode sombre' : 'Activer le mode clair');
+            }
+        }
+
+        // Animation simple pour le preview
+        function animatePreview() {
+            const tokens = document.querySelectorAll('.preview-token');
+            tokens.forEach((token, index) => {
+                setTimeout(() => {
+                    token.style.opacity = '1';
+                    token.style.transform = 'scale(1)';
+                }, index * 50);
+            });
+        }
+        
+        // Smooth scroll pour les ancres
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+            animatePreview();
+            initSmoothScroll();
+        });
+    </script>
+</body>
+</html>
