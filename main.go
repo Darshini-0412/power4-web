@@ -15,7 +15,7 @@ var currentGame = game.NewGame()
 func main() {
 	// Enregistrement des routes (URL) et de leurs fonctions de traitement
 	http.HandleFunc("/", homeHandler)            // Page d'accueil
-	http.HandleFunc("/game", gameHandler)          // Page principale du jeu
+	http.HandleFunc("/game", gameHandler)        // Page principale du jeu
 	http.HandleFunc("/play", playHandler)        // Traitement des coups (version classique)
 	http.HandleFunc("/reset", resetHandler)      // Réinitialisation de la partie
 	http.HandleFunc("/clean", cleanHandler)      // Nettoyage du modal
@@ -79,7 +79,7 @@ func gameHandler(w http.ResponseWriter, r *http.Request) {
 	})
 
 	tmpl = template.Must(tmpl.ParseFiles("templates/index.html"))
-	
+
 	winner := ""
 	if currentGame.CheckWinner() != "" {
 		winner = currentGame.CheckWinner()
@@ -102,8 +102,6 @@ func gameHandler(w http.ResponseWriter, r *http.Request) {
 		LastMove: currentGame.LastMove,
 	})
 }
-
-
 
 // apiPlayHandler gère les coups joués via AJAX
 // Retourne du JSON au lieu de rediriger vers une page HTML
@@ -146,7 +144,7 @@ func apiPlayHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Construction manuelle du JSON pour éviter les imports supplémentaires
 	// Format: {"success": true, "lastMove": {"row": X, "col": Y}}
-	response := `{"success": true, "lastMove": {"row": ` + strconv.Itoa(currentGame.LastMove.Row) + `, "col": ` + strconv.Itoa(currentGame.LastMove.Col) + }}
+	response := `{"success": true, "lastMove": {"row": ` + strconv.Itoa(currentGame.LastMove.Row) + `, "col": ` + strconv.Itoa(currentGame.LastMove.Col) + `}}`
 
 	// Envoi de la réponse
 	w.Write([]byte(response))
@@ -176,16 +174,16 @@ func playHandler(w http.ResponseWriter, r *http.Request) {
 
 // resetHandler réinitialise la partie en cours
 func resetHandler(w http.ResponseWriter, r *http.Request) {
-    if r.Method == http.MethodPost {
-        currentGame = game.NewGame()
-        log.Println("Nouvelle partie lancée")
-    }
-    http.Redirect(w, r, "/game", http.StatusSeeOther)
+	if r.Method == http.MethodPost {
+		currentGame = game.NewGame()
+		log.Println("Nouvelle partie lancée")
+	}
+	http.Redirect(w, r, "/game", http.StatusSeeOther)
 }
 
 // AJOUTEZ cette nouvelle route pour "nettoyer" le modal
 func cleanHandler(w http.ResponseWriter, r *http.Request) {
-    // Réinitialiser le jeu et rediriger vers l'accueil
-    currentGame = game.NewGame()
-    http.Redirect(w, r, "/", http.StatusSeeOther)
+	// Réinitialiser le jeu et rediriger vers l'accueil
+	currentGame = game.NewGame()
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
