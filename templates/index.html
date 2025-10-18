@@ -1,6 +1,5 @@
-<!-- templates/index.html -->
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <title>⭐Power 4 Web⭐</title>
@@ -8,86 +7,261 @@
   <link rel="stylesheet" href="../static/style.css" />
 </head>
 <body class="page">
+  <!-- Sélecteur de thème -->
+  <div class="theme-switcher">
+    <button class="theme-btn" aria-label="Changer le thème">🌙</button>
+  </div>
+
   <header class="header">
     <h1 class="title">⭐Power 4 Web⭐</h1>
+     <a href="/" class="home-btn">🏠 Accueil</a>
   </header>
 
   <main class="container">
+    <!-- Section Règles -->
     <section class="card">
+      <h2>📋 Règles du Jeu</h2>
       <ul class="rules">
-        <li>Deux joueurs : Rouge 🔴 et Jaune 🟡.</li>
-        <li>Joue en choisissant une <strong>colonne</strong>.</li>
-        <li>4 jetons alignés = victoire (H/V/Diagonale).</li>
-        <li>Grille pleine sans alignement = match nul.</li>
+        <li>🎯 Deux joueurs : Rouge 🔴 et Jaune 🟡</li>
+        <li>🎮 Joue en choisissant une <strong>colonne</strong></li>
+        <li>🏆 4 jetons alignés = victoire (Horizontal/Vertical/Diagonale)</li>
+        <li>⚖️ Grille pleine sans alignement = match nul</li>
+        <li>⬇️ Utilise les flèches pour placer tes jetons</li>
       </ul>
+      
+      <!-- Indicateur de tour actuel -->
+      <div class="turn">
+        <strong>Tour actuel :</strong>
+        {{if eq .Turn "R"}}🔴 Joueur Rouge{{else}}🟡 Joueur Jaune{{end}}
+      </div>
+    </section>
 
-      <section id="board" class="card">
-        <h2>Plateau — 6 x 7</h2>
+    <!-- Section Plateau de jeu -->
+    <section class="card" id="board">
+      <h2>🎮 Plateau de Jeu — 6 x 7</h2>
 
-        <!-- 🔄 Bouton pour réinitialiser la partie -->
-        <form action="/reset" method="POST">
-          <button type="submit">🔄 Réinitialiser la partie</button>
-        </form>
+      <!-- Bouton pour réinitialiser la partie -->
+      <form action="/reset" method="POST" class="text-center">
+        <button type="submit">🔄 Réinitialiser la partie</button>
+      </form>
 
-        <!-- 🎯 Flèches pour jouer dans chaque colonne -->
-        <div class="playbar">
-          <div class="columns">
-            {{range $i := seq 0 6}}
-              <form class="playform" action="/play" method="POST">
-                <input type="hidden" name="column" value="{{$i}}">
-                <button class="col-btn" type="submit" aria-label="Colonne {{$i}}">↓</button>
-              </form>
-            {{end}}
-          </div>
+      <!-- Flèches pour jouer dans chaque colonne -->
+      <div class="playbar">
+        <div class="columns">
+          {{range $i := seq 0 6}}
+            <form class="playform" action="/play" method="POST">
+              <input type="hidden" name="column" value="{{$i}}">
+              <button class="col-btn" type="submit" aria-label="Jouer dans la colonne {{$i}}">
+                ↓
+              </button>
+            </form>
+          {{end}}
         </div>
+      </div>
 
-        <!-- 🧠 Tour du joueur -->
-        <p class="turn">
-          Tour du joueur :
-          {{if eq .Turn "R"}}🔴 Rouge{{else}}🟡 Jaune{{end}}
+      <!-- Message de tour -->
+      <p class="turn">
+        <strong>Tour du joueur :</strong>
+        {{if eq .Turn "R"}}🔴 Rouge{{else}}🟡 Jaune{{end}}
+      </p>
+
+      <!-- Message de victoire (caché, utilisé pour le modal) -->
+      {{if .Winner}}
+        <div class="hidden" id="winner-data">
+          {{if eq .Winner "R"}}R{{else if eq .Winner "Y"}}Y{{else}}draw{{end}}
+        </div>
+        <p class="winner hidden">
+          {{if eq .Winner "R"}}🔴 Team Rouge a gagné ! 🥳
+          {{else if eq .Winner "Y"}}🟡 Team Jaune a gagné ! 🥳
+          {{else}}Match nul 😔{{end}}
         </p>
-        <!-- 🏆 Message de victoire -->
-        {{if .Winner}}
-          <p class="winner">
-            {{if eq .Winner "R"}}🔴 Team Rouge a gagné ! 🥳
-            {{else if eq .Winner "Y"}}🟡 Team Jaune a gagné ! 🥳
-            {{else}}Match nul 😔{{end}} 
-          </p>
-            <!-- ✅ Bouton Rejouer -->
-          <form method="POST" action="/reset">
-            <button class="replay-button">🔄 Rejouer</button>
-          </form>
-        {{end}}
+      {{end}}
 
-        <p>Grille : {{len .Grid}} lignes</p>
-        <p>Colonnes dans ligne 0 : {{len (index .Grid 0)}}</p>
 
-        <!-- 🧩 Grille du jeu -->
-        <div class="board-wrapper" id="grille">
-          <table class="board" role="grid" aria-label="Grille Power 4">
-            <tbody>
-              {{range $i := seq 5 0}} <!-- lignes de bas en haut -->
-                <tr>
-                  {{range $index, $cell := index $.Grid $i}} <!-- chaque cellule -->
-                    <td>
-                      <div class="cell">
-                        {{if eq $cell "R"}}
-                          <div class="token red"></div>
-                        {{else if eq $cell "Y"}}
-                          <div class="token yellow"></div>
-                        {{else}}
-                          <div class="token empty"></div>
-                        {{end}}
-                      </div>
-                    </td>
-                  {{end}}
-                </tr>
-              {{end}}
-            </tbody>
-          </table>
-        </div> <!-- board-wrapper -->
-      </section> <!-- board -->
-    </section> <!-- card -->
+      <!-- Grille du jeu -->
+      <div class="board-wrapper">
+        <table class="board" role="grid" aria-label="Grille Power 4">
+          <tbody>
+            {{range $i := seq 5 0}} <!-- lignes de bas en haut -->
+              <tr>
+                {{range $index, $cell := index $.Grid $i}} <!-- chaque cellule -->
+                  <td>
+                    <div class="cell">
+                      {{if eq $cell "R"}}
+                        <div class="token red" aria-label="Jeton rouge"></div>
+                      {{else if eq $cell "Y"}}
+                        <div class="token yellow" aria-label="Jeton jaune"></div>
+                      {{else}}
+                        <div class="token empty" aria-label="Case vide"></div>
+                      {{end}}
+                    </div>
+                  </td>
+                {{end}}
+              </tr>
+            {{end}}
+          </tbody>
+        </table>
+      </div>
+    </section>
   </main>
+
+  <!-- Modal des résultats -->
+  <!-- Modal des résultats -->
+<div id="resultModal" class="modal-overlay">
+    <div class="modal-content">
+        <h2 id="modalTitle" class="modal-title">🎉 Félicitations !</h2>
+        <p id="modalMessage" class="modal-message"></p>
+        <div class="modal-actions">
+            <button class="modal-btn primary" onclick="resetGame()">
+                🔄 Nouvelle Partie
+            </button>
+            <button class="modal-btn secondary" onclick="goToHome()">
+                🏠 Retour à l'Accueil
+            </button>
+        </div>
+    </div>
+</div>
+
+
+  <script>
+    // Fonctions pour gérer le thème
+    function initTheme() {
+        const theme = localStorage.getItem("theme") || "light";
+        document.documentElement.setAttribute("data-theme", theme);
+        updateThemeButton(theme);
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute("data-theme");
+        const newTheme = currentTheme === "light" ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+        updateThemeButton(newTheme);
+    }
+
+    function updateThemeButton(theme) {
+        const themeBtn = document.querySelector(".theme-btn");
+        if (themeBtn) {
+            themeBtn.innerHTML = theme === "light" ? "🌙" : "☀️";
+        }
+    }
+
+    // 🎯 JOUER UN COUP AVEC AJAX
+    async function playMove(column) {
+        console.log("Jouer dans la colonne:", column);
+
+        try {
+            const response = await fetch("/api/play", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: "column=" + column,
+            });
+
+            if (response.ok) {
+                // Recharger la page pour voir les changements
+                window.location.reload();
+            } else {
+                const errorText = await response.text();
+                console.error("Erreur serveur:", errorText);
+                alert("Impossible de jouer: " + errorText);
+            }
+        } catch (error) {
+            console.error("Erreur réseau:", error);
+            // Fallback: rechargement classique
+            window.location.href = "/play?column=" + column;
+        }
+    }
+
+    // 🎯 MODAL DES RÉSULTATS
+    function showGameResult(winner) {
+        const modal = document.getElementById("resultModal");
+        const modalMessage = document.getElementById("modalMessage");
+        const modalTitle = document.getElementById("modalTitle");
+
+        if (winner === "R") {
+            modalTitle.textContent = "🎉 Félicitations !";
+            modalMessage.innerHTML = "🔴 <strong>Team Rouge</strong> a gagné la partie !";
+        } else if (winner === "Y") {
+            modalTitle.textContent = "🎉 Félicitations !";
+            modalMessage.innerHTML = "🟡 <strong>Team Jaune</strong> a gagné la partie !";
+        } else {
+            modalTitle.textContent = "🤝 Match Nul";
+            modalMessage.innerHTML = "La grille est pleine !<br>Aucun gagnant cette fois-ci.";
+        }
+
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
+
+    function hideGameResult() {
+        const modal = document.getElementById("resultModal");
+        modal.classList.remove("active");
+        document.body.style.overflow = "auto";
+    }
+
+    function resetGame() {
+        // CORRECTION : Ne pas cacher le modal, la redirection le fera
+        document.querySelector('form[action="/reset"]').submit();
+    }
+
+    function goToHome() {
+    // Appeler le handler de nettoyage avant de rediriger
+    fetch('/clean', {
+        method: 'POST'
+    }).then(() => {
+        window.location.href = "/";
+    }).catch(() => {
+        window.location.href = "/";
+    });
+}
+
+    // 🎯 INITIALISATION
+    document.addEventListener("DOMContentLoaded", function () {
+        initTheme();
+
+        // Remplacer les formulaires par des appels AJAX
+        document.querySelectorAll(".playform").forEach((form) => {
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const column = this.querySelector('input[name="column"]').value;
+                playMove(column);
+            });
+        });
+
+        // Afficher le modal si il y a un gagnant au chargement initial
+        const winnerData = document.getElementById("winner-data");
+        if (winnerData) {
+            const winner = winnerData.textContent.trim();
+            if (winner === "R" || winner === "Y" || winner === "draw") {
+                setTimeout(() => showGameResult(winner), 500);
+            }
+        }
+
+        // Événements du modal
+        const modal = document.getElementById("resultModal");
+        if (modal) {
+            modal.addEventListener("click", function (e) {
+                if (e.target === modal) {
+                    hideGameResult();
+                }
+            });
+        }
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") {
+                hideGameResult();
+            }
+        });
+
+        // Événement du bouton theme
+        const themeBtn = document.querySelector(".theme-btn");
+        if (themeBtn) {
+            themeBtn.addEventListener("click", toggleTheme);
+        }
+    });
+</script>
+
 </body>
 </html>
