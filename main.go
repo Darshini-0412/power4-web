@@ -15,7 +15,11 @@ var currentGame = game.NewGame()
 func main() {
 	// Enregistrement des routes (URL) et de leurs fonctions de traitement
 	http.HandleFunc("/", homeHandler)            // Page d'accueil
+<<<<<<< HEAD
 	http.HandleFunc("/game", gameHandler)        // Page principale du jeu
+=======
+	http.HandleFunc("/game", gameHandler)          // Page principale du jeu
+>>>>>>> b9bdf19762ad3d1cd1a9bce8d144b03ce7aa5f5c
 	http.HandleFunc("/play", playHandler)        // Traitement des coups (version classique)
 	http.HandleFunc("/reset", resetHandler)      // Réinitialisation de la partie
 	http.HandleFunc("/clean", cleanHandler)      // Nettoyage du modal
@@ -79,7 +83,11 @@ func gameHandler(w http.ResponseWriter, r *http.Request) {
 	})
 
 	tmpl = template.Must(tmpl.ParseFiles("templates/index.html"))
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> b9bdf19762ad3d1cd1a9bce8d144b03ce7aa5f5c
 	winner := ""
 	if currentGame.CheckWinner() != "" {
 		winner = currentGame.CheckWinner()
@@ -103,6 +111,11 @@ func gameHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> b9bdf19762ad3d1cd1a9bce8d144b03ce7aa5f5c
 // apiPlayHandler gère les coups joués via AJAX
 // Retourne du JSON au lieu de rediriger vers une page HTML
 func apiPlayHandler(w http.ResponseWriter, r *http.Request) {
@@ -174,16 +187,30 @@ func playHandler(w http.ResponseWriter, r *http.Request) {
 
 // resetHandler réinitialise la partie en cours
 func resetHandler(w http.ResponseWriter, r *http.Request) {
+<<<<<<< HEAD
 	if r.Method == http.MethodPost {
 		currentGame = game.NewGame()
 		log.Println("Nouvelle partie lancée")
 	}
 	http.Redirect(w, r, "/game", http.StatusSeeOther)
+=======
+    if r.Method == http.MethodPost {
+        currentGame = game.NewGame()
+        log.Println("Nouvelle partie lancée")
+    }
+    http.Redirect(w, r, "/game", http.StatusSeeOther)
+>>>>>>> b9bdf19762ad3d1cd1a9bce8d144b03ce7aa5f5c
 }
 
 // AJOUTEZ cette nouvelle route pour "nettoyer" le modal
 func cleanHandler(w http.ResponseWriter, r *http.Request) {
+<<<<<<< HEAD
 	// Réinitialiser le jeu et rediriger vers l'accueil
 	currentGame = game.NewGame()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
+=======
+    // Réinitialiser le jeu et rediriger vers l'accueil
+    currentGame = game.NewGame()
+    http.Redirect(w, r, "/", http.StatusSeeOther)
+>>>>>>> b9bdf19762ad3d1cd1a9bce8d144b03ce7aa5f5c
 }

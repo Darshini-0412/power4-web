@@ -36,14 +36,21 @@ func NewGame() *Game {
 		Turn: "R",  // Premier joueur : Rouge
 	}
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> b9bdf19762ad3d1cd1a9bce8d144b03ce7aa5f5c
 // PlayMove - VERSION SIMPLIFIÉE et CORRECTE
 // Les jetons tombent vers le BAS (ligne 5 = bas, ligne 0 = haut)
 func (g *Game) PlayMove(col int) bool {
 	if col < 0 || col >= len(g.Grid[0]) {
 		return false
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> b9bdf19762ad3d1cd1a9bce8d144b03ce7aa5f5c
 	// CORRECTION : Parcours de BAS EN HAUT pour trouver la première case vide
 	// Ligne 5 = bas, Ligne 0 = haut
 	for i := len(g.Grid) - 1; i >= 0; i-- {
@@ -56,7 +63,11 @@ func (g *Game) PlayMove(col int) bool {
 			return true
 		}
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> b9bdf19762ad3d1cd1a9bce8d144b03ce7aa5f5c
 	return false // Colonne pleine
 }
 
