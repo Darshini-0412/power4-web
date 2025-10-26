@@ -37,10 +37,9 @@
                     <p>Affrontez vos amis dans ce classique intemporel du jeu de stratégie. Alignez 4 jetons et remportez la victoire !</p>
                     
                     <div class="cta-buttons">
-                        <a href="/game" class="btn btn-primary">
-                            🎮 Jouer Maintenant
-                        </a>
-                        
+                        <button class="btn btn-primary" onclick="togglePlayerConfig()">
+                            🎮 Configurer & Jouer
+                        </button>
                     </div>
                 </div>
                 
@@ -108,7 +107,446 @@
             </div>
         </section>
 
-       
+        <!-- Section de Configuration des Joueurs (cachée par défaut) -->
+        <section id="playerConfigSection" class="config-section hidden">
+            <div class="container">
+                <div class="config-header">
+                    <h2>⚙ Configuration de la Partie</h2>
+                    <button class="close-config-btn" onclick="togglePlayerConfig()" aria-label="Fermer la configuration">
+                        &times;
+                    </button>
+                </div>
+                
+                <div class="config-body">
+                    <form id="playerConfigForm" class="config-form">
+                        <!-- Configuration des joueurs -->
+                        <div class="players-config">
+                            <!-- Joueur 1 -->
+                            <div class="player-config-card "id="player1-config">
+                                <div class="player-header">
+                                    <div class="player-avatar player1">1</div>
+                                    <div class="player-info">
+                                        <h3>Joueur 1</h3>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Nom du joueur</label>
+                                    <input
+                                        type="text"
+                                        class="form-input"
+                                        id="player1Name"
+                                        name="player1_name"
+                                        placeholder="Votre nom"
+                                        value="Joueur 1"
+                                        maxlength="15"
+                                        required
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Couleur des jetons</label>
+                                    <div class="color-configuration">
+                                        <div class="color-main-selector">
+                                            <div class="color-visual">
+                                                <div
+                                                    class="color-preview-large"
+                                                    id="player1-color-visual"
+                                                    style="background-color: #ef4444"
+                                                >
+                                                    Rouge
+                                                </div>
+                                                <input
+                                                    type="color"
+                                                    class="sr-only"
+                                                    id="player1Color"
+                                                    name="player1_color"
+                                                    value="#ef4444"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    class="color-random"
+                                                    onclick="randomizeColor('player1')"
+                                                >
+                                                    🎲 Aléatoire
+                                                </button>
+                                            </div>
+
+                                            <div class="color-input-advanced">
+                                                <div class="color-hex-input">
+                                                    <span class="hex-prefix">#</span>
+                                                    <input
+                                                        type="text"
+                                                        class="color-input-field"
+                                                        id="player1-hex"
+                                                        value="ef4444"
+                                                        maxlength="6"
+                                                        oninput="updateColorFromHex('player1', this.value)"
+                                                    />
+                                                </div>
+
+                                                <div class="color-sliders">
+                                                    <div class="slider-group">
+                                                        <span class="slider-label">R</span>
+                                                        <div class="slider-container">
+                                                            <input
+                                                                type="range"
+                                                                class="color-slider"
+                                                                id="player1-r"
+                                                                min="0"
+                                                                max="255"
+                                                                value="239"
+                                                                oninput="updateColorFromSliders('player1')"
+                                                            />
+                                                            <span class="slider-value" id="player1-r-value">239</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slider-group">
+                                                        <span class="slider-label">G</span>
+                                                        <div class="slider-container">
+                                                            <input
+                                                                type="range"
+                                                                class="color-slider"
+                                                                id="player1-g"
+                                                                min="0"
+                                                                max="255"
+                                                                value="68"
+                                                                oninput="updateColorFromSliders('player1')"
+                                                            />
+                                                            <span class="slider-value" id="player1-g-value">68</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slider-group">
+                                                        <span class="slider-label">B</span>
+                                                        <div class="slider-container">
+                                                            <input
+                                                                type="range"
+                                                                class="color-slider"
+                                                                id="player1-b"
+                                                                min="0"
+                                                                max="255"
+                                                                value="68"
+                                                                oninput="updateColorFromSliders('player1')"
+                                                            />
+                                                            <span class="slider-value" id="player1-b-value">68</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="color-palette">
+                                            <div class="palette-title">Palette de couleurs</div>
+                                            <div class="palette-grid">
+                                                <div
+                                                    class="palette-color selected"
+                                                    style="background-color: #ef4444"
+                                                    data-color="#ef4444"
+                                                    onclick="selectPaletteColor('player1', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #f59e0b"
+                                                    data-color="#f59e0b"
+                                                    onclick="selectPaletteColor('player1', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #3b82f6"
+                                                    data-color="#3b82f6"
+                                                    onclick="selectPaletteColor('player1', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #10b981"
+                                                    data-color="#10b981"
+                                                    onclick="selectPaletteColor('player1', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #8b5cf6"
+                                                    data-color="#8b5cf6"
+                                                    onclick="selectPaletteColor('player1', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #ec4899"
+                                                    data-color="#ec4899"
+                                                    onclick="selectPaletteColor('player1', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #06b6d4"
+                                                    data-color="#06b6d4"
+                                                    onclick="selectPaletteColor('player1', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #84cc16"
+                                                    data-color="#84cc16"
+                                                    onclick="selectPaletteColor('player1', this)"
+                                                ></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="color-conflict hidden" id="player1-color-conflict">
+                                            <span>⚠</span>
+                                            <span>Cette couleur est déjà utilisée par l'autre joueur</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Joueur 2 -->
+                            <div class="player-config-card" id="player2-config">
+                                <div class="player-header">
+                                    <div class="player-avatar player2">2</div>
+                                    <div class="player-info">
+                                        <h3>Joueur 2</h3>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Nom du joueur</label>
+                                    <input
+                                        type="text"
+                                        class="form-input"
+                                        id="player2Name"
+                                        name="player2_name"
+                                        placeholder="Nom du joueur 2"
+                                        value="Joueur 2"
+                                        maxlength="15"
+                                        required
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Couleur des jetons</label>
+                                    <div class="color-configuration">
+                                        <div class="color-main-selector">
+                                            <div class="color-visual">
+                                                <div
+                                                    class="color-preview-large"
+                                                    id="player2-color-visual"
+                                                    style="background-color: #f59e0b"
+                                                >
+                                                    Jaune
+                                                </div>
+                                                <input
+                                                    type="color"
+                                                    class="sr-only"
+                                                    id="player2Color"
+                                                    name="player2_color"
+                                                    value="#f59e0b"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    class="color-random"
+                                                    onclick="randomizeColor('player2')"
+                                                >
+                                                    🎲 Aléatoire
+                                                </button>
+                                            </div>
+
+                                            <div class="color-input-advanced">
+                                                <div class="color-hex-input">
+                                                    <span class="hex-prefix">#</span>
+                                                    <input
+                                                        type="text"
+                                                        class="color-input-field"
+                                                        id="player2-hex"
+                                                        value="f59e0b"
+                                                        maxlength="6"
+                                                        oninput="updateColorFromHex('player2', this.value)"
+                                                    />
+                                                </div>
+
+                                                <div class="color-sliders">
+                                                    <div class="slider-group">
+                                                        <span class="slider-label">R</span>
+                                                        <div class="slider-container">
+                                                            <input
+                                                                type="range"
+                                                                class="color-slider"
+                                                                id="player2-r"
+                                                                min="0"
+                                                                max="255"
+                                                                value="245"
+                                                                oninput="updateColorFromSliders('player2')"
+                                                            />
+                                                            <span class="slider-value" id="player2-r-value">245</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slider-group">
+                                                        <span class="slider-label">G</span>
+                                                        <div class="slider-container">
+                                                            <input
+                                                                type="range"
+                                                                class="color-slider"
+                                                                id="player2-g"
+                                                                min="0"
+                                                                max="255"
+                                                                value="158"
+                                                                oninput="updateColorFromSliders('player2')"
+                                                            />
+                                                            <span class="slider-value" id="player2-g-value">158</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slider-group">
+                                                        <span class="slider-label">B</span>
+                                                        <div class="slider-container">
+                                                            <input
+                                                                type="range"
+                                                                class="color-slider"
+                                                                id="player2-b"
+                                                                min="0"
+                                                                max="255"
+                                                                value="11"
+                                                                oninput="updateColorFromSliders('player2')"
+                                                            />
+                                                            <span class="slider-value" id="player2-b-value">11</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="color-palette">
+                                            <div class="palette-title">Palette de couleurs</div>
+                                            <div class="palette-grid">
+                                                <div
+                                                    class="palette-color selected"
+                                                    style="background-color: #f59e0b"
+                                                    data-color="#f59e0b"
+                                                    onclick="selectPaletteColor('player2', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #ef4444"
+                                                    data-color="#ef4444"
+                                                    onclick="selectPaletteColor('player2', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #3b82f6"
+                                                    data-color="#3b82f6"
+                                                    onclick="selectPaletteColor('player2', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #10b981"
+                                                    data-color="#10b981"
+                                                    onclick="selectPaletteColor('player2', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #8b5cf6"
+                                                    data-color="#8b5cf6"
+                                                    onclick="selectPaletteColor('player2', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #ec4899"
+                                                    data-color="#ec4899"
+                                                    onclick="selectPaletteColor('player2', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #06b6d4"
+                                                    data-color="#06b6d4"
+                                                    onclick="selectPaletteColor('player2', this)"
+                                                ></div>
+                                                <div
+                                                    class="palette-color"
+                                                    style="background-color: #84cc16"
+                                                    data-color="#84cc16"
+                                                    onclick="selectPaletteColor('player2', this)"
+                                                ></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="color-conflict hidden" id="player2-color-conflict">
+                                            <span>⚠</span>
+                                            <span>Cette couleur est déjà utilisée par l'autre joueur</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Configuration du Timer -->
+                        <div class="timer-config-card">
+                            <div class="timer-header">
+                                <div class="timer-icon">⏱</div>
+                                <h3 class="timer-title">Paramètres de Temps</h3>
+                            </div>
+                            
+                            <div class="config-fields">
+                                <div class="config-field-group">
+                                    <label for="moveTime" class="field-label">Temps entre chaque coup (secondes)</label>
+                                    <div class="time-input-container">
+                                        <input 
+                                            type="range" 
+                                            id="moveTime" 
+                                            name="moveTime" 
+                                            min="1" 
+                                            max="60" 
+                                            value="30"
+                                            class="time-slider"
+                                        >
+                                        <div class="time-display">
+                                            <span id="timeValue">30</span> secondes
+                                        </div>
+                                    </div>
+                                    <div class="time-presets">
+                                        <button type="button" class="time-preset" data-time="15">Rapide (15s)</button>
+                                        <button type="button" class="time-preset" data-time="30">Standard (30s)</button>
+                                        <button type="button" class="time-preset" data-time="45">Relax (45s)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Aperçu en temps réel -->
+                        <div class="preview-card">
+                            <div class="preview-header">
+                                <div class="preview-icon">👀</div>
+                                <h3 class="preview-title">Aperçu</h3>
+                            </div>
+                            
+                            <div class="preview-content">
+                                <div class="live-preview">
+                                    <div class="preview-players">
+                                        <div class="preview-player" id="previewPlayer1">
+                                            <div class="preview-color" style="background-color: #ef4444;"></div>
+                                            <span class="preview-name">Joueur 1</span>
+                                        </div>
+                                        <div class="preview-vs">VS</div>
+                                        <div class="preview-player" id="previewPlayer2">
+                                            <div class="preview-color" style="background-color: #f59e0b;"></div>
+                                            <span class="preview-name">Joueur 2</span>
+                                        </div>
+                                    </div>
+                                    <div class="preview-timer">
+                                        ⏱ Temps par coup: <span id="previewTime">30</span>s
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="config-footer">
+                    <button type="button" class="btn btn-secondary" onclick="togglePlayerConfig()">
+                        Annuler
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="startGame()">
+                        🎮 Démarrer la Partie
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!-- Section Rules -->
         <section id="rules" class="rules-section">
             <div class="container">
@@ -168,10 +606,10 @@
                                     <div class="example-row">
                                         <div class="example-cell"><div class="example-token"></div></div>
                                         <div class="example-cell"><div class="example-token"></div></div>
-                                        <div class="example-cell"><div class="example-token red"></div></div>
-                                        <div class="example-cell"><div class="example-token red"></div></div>
-                                        <div class="example-cell"><div class="example-token red"></div></div>
-                                        <div class="example-cell"><div class="example-token red"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
                                         <div class="example-cell"><div class="example-token"></div></div>
                                     </div>
                                     <div class="example-row">
@@ -181,6 +619,15 @@
                                         <div class="example-cell"><div class="example-token"></div></div>
                                         <div class="example-cell"><div class="example-token"></div></div>
                                         <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                    </div>
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token red"></div></div>
+                                        <div class="example-cell"><div class="example-token red"></div></div>
+                                        <div class="example-cell"><div class="example-token red"></div></div>
+                                        <div class="example-cell"><div class="example-token red"></div></div>
                                         <div class="example-cell"><div class="example-token"></div></div>
                                     </div>
                                 </div>
@@ -224,7 +671,88 @@
                                         <div class="example-cell"><div class="example-token"></div></div>
                                         <div class="example-cell"><div class="example-token"></div></div>
                                         <div class="example-cell"><div class="example-token"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="example">
+                                <h4>Diagonale</h4>
+                                <div class="example-board small">
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token red"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
                                     </div>
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token red"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                    </div>
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token red"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                    </div>
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token red"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="example">
+                                <h4>Diagonale</h4>
+                                <div class="example-board small">
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token yellow"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                    </div>
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token yellow"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                    </div>
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token yellow"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                    </div>
+                                    <div class="example-row">
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
+                                        <div class="example-cell"><div class="example-token yellow"></div></div>
+                                        <div class="example-cell"><div class="example-token"></div></div>
                                 </div>
                             </div>
                         </div>
@@ -232,8 +760,6 @@
                 </div>
             </div>
         </section>
-
-        
     </main>
 
     <!-- Footer -->
@@ -241,71 +767,314 @@
         <div class="container">
             <p>⭐ Créé avec passion par l'équipe Power 4 Web ⭐</p>
             <p class="footer-links">
-                <a href="/game">Jouer</a> • 
+                <a href="#" onclick="togglePlayerConfig()">Jouer</a> • 
                 <a href="#rules">Règles</a> • 
-                <span class="version">Version 1.0</span>
+                <span class="version">Version 1.1</span>
             </p>
         </div>
     </footer>
 
     <script>
-        // Gestion du thème
-        function initTheme() {
-            const theme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', theme);
-            updateThemeButton(theme);
-        }
+    // Gestion du thème
+    function initTheme() {
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        updateThemeButton(theme);
+    }
 
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeButton(newTheme);
-        }
-
-        function updateThemeButton(theme) {
-            const themeBtn = document.querySelector('.theme-btn');
-            if (themeBtn) {
-                themeBtn.innerHTML = theme === 'light' ? '🌙' : '☀️';
-                themeBtn.setAttribute('aria-label', 
-                    theme === 'light' ? 'Activer le mode sombre' : 'Activer le mode clair');
-            }
-        }
-
-        // Animation simple pour le preview
-        function animatePreview() {
-            const tokens = document.querySelectorAll('.preview-token');
-            tokens.forEach((token, index) => {
-                setTimeout(() => {
-                    token.style.opacity = '1';
-                    token.style.transform = 'scale(1)';
-                }, index * 50);
-            });
-        }
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         
-        // Smooth scroll pour les ancres
-        function initSmoothScroll() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeButton(newTheme);
+    }
+
+    function updateThemeButton(theme) {
+        const themeBtn = document.querySelector('.theme-btn');
+        if (themeBtn) {
+            themeBtn.innerHTML = theme === 'light' ? '🌙' : '☀';
+            themeBtn.setAttribute('aria-label', 
+                theme === 'light' ? 'Activer le mode sombre' : 'Activer le mode clair');
         }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            initTheme();
-            animatePreview();
-            initSmoothScroll();
+    }
+
+    // Animation simple pour le preview
+    function animatePreview() {
+        const tokens = document.querySelectorAll('.preview-token');
+        tokens.forEach((token, index) => {
+            setTimeout(() => {
+                token.style.opacity = '1';
+                token.style.transform = 'scale(1)';
+            }, index * 50);
         });
-    </script>
+    }
+    
+    // Smooth scroll pour les ancres
+    function initSmoothScroll() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    }
+
+    // Gestion de la configuration des joueurs
+    function togglePlayerConfig() {
+        const configSection = document.getElementById('playerConfigSection');
+        configSection.classList.toggle('hidden');
+        
+        if (!configSection.classList.contains('hidden')) {
+            // Scroll vers la section de configuration
+            configSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+
+    // Gestion des couleurs - Fonctions manquantes
+    function randomizeColor(player) {
+        const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+        updatePlayerColor(player, randomColor);
+    }
+
+    function updatePlayerColor(player, color) {
+        const colorInput = document.getElementById(player + 'Color');
+        const visual = document.getElementById(player + '-color-visual');
+        const hexInput = document.getElementById(player + '-hex');
+        
+        colorInput.value = color;
+        visual.style.backgroundColor = color;
+        visual.textContent = getColorName(color);
+        hexInput.value = color.substring(1);
+        
+        updateColorSliders(player, color);
+        updatePaletteSelection(player, color);
+        checkColorConflict();
+        updateLivePreview();
+    }
+
+    function updateColorFromHex(player, hexValue) {
+        if (hexValue.length === 6 && /^[0-9A-Fa-f]{6}$/i.test(hexValue)) {
+            const color = '#' + hexValue;
+            updatePlayerColor(player, color);
+        }
+    }
+
+    function updateColorFromSliders(player) {
+        const r = document.getElementById(player + '-r').value;
+        const g = document.getElementById(player + '-g').value;
+        const b = document.getElementById(player + '-b').value;
+        
+        const color = rgbToHex(parseInt(r), parseInt(g), parseInt(b));
+        updatePlayerColor(player, color);
+    }
+
+    function updateColorSliders(player, color) {
+        const rgb = hexToRgb(color);
+        if (rgb) {
+            document.getElementById(player + '-r').value = rgb.r;
+            document.getElementById(player + '-g').value = rgb.g;
+            document.getElementById(player + '-b').value = rgb.b;
+            
+            document.getElementById(player + '-r-value').textContent = rgb.r;
+            document.getElementById(player + '-g-value').textContent = rgb.g;
+            document.getElementById(player + '-b-value').textContent = rgb.b;
+        }
+    }
+
+    function selectPaletteColor(player, element) {
+        const color = element.getAttribute('data-color');
+        updatePlayerColor(player, color);
+        
+        // CORRECTION : Mettre à jour la sélection de la palette pour le joueur spécifique
+        const playerConfig = document.getElementById(player + '-config');
+        if (playerConfig) {
+            playerConfig.querySelectorAll('.palette-color').forEach(el => {
+                el.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+    }
+
+    function updatePaletteSelection(player, color) {
+        // CORRECTION : Sélectionner uniquement dans le conteneur du joueur spécifique
+        const playerConfig = document.getElementById(player + '-config');
+        if (playerConfig) {
+            playerConfig.querySelectorAll('.palette-color').forEach(el => {
+                if (el.getAttribute('data-color').toLowerCase() === color.toLowerCase()) {
+                    el.classList.add('selected');
+                } else {
+                    el.classList.remove('selected');
+                }
+            });
+        }
+    }
+
+    function checkColorConflict() {
+        const color1 = document.getElementById('player1Color').value;
+        const color2 = document.getElementById('player2Color').value;
+        
+        const conflict1 = document.getElementById('player1-color-conflict');
+        const conflict2 = document.getElementById('player2-color-conflict');
+        
+        if (color1 === color2) {
+            conflict1.classList.remove('hidden');
+            conflict2.classList.remove('hidden');
+        } else {
+            conflict1.classList.add('hidden');
+            conflict2.classList.add('hidden');
+        }
+    }
+
+    function getColorName(hex) {
+        const colors = {
+            '#ef4444': 'Rouge',
+            '#f59e0b': 'Jaune',
+            '#3b82f6': 'Bleu',
+            '#10b981': 'Vert',
+            '#8b5cf6': 'Violet',
+            '#ec4899': 'Rose',
+            '#06b6d4': 'Cyan',
+            '#84cc16': 'Vert Lime'
+        };
+        return colors[hex.toLowerCase()] || 'Personnalisé';
+    }
+
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
+
+    function rgbToHex(r, g, b) {
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    // Mise à jour de l'aperçu en temps réel
+    function updateLivePreview() {
+        // Mise à jour des noms
+        document.getElementById('previewPlayer1').querySelector('.preview-name').textContent = 
+            document.getElementById('player1Name').value || 'Joueur 1';
+        document.getElementById('previewPlayer2').querySelector('.preview-name').textContent = 
+            document.getElementById('player2Name').value || 'Joueur 2';
+
+        // Mise à jour des couleurs
+        const color1 = document.getElementById('player1Color').value;
+        const color2 = document.getElementById('player2Color').value;
+        
+        document.getElementById('previewPlayer1').querySelector('.preview-color').style.backgroundColor = color1;
+        document.getElementById('previewPlayer2').querySelector('.preview-color').style.backgroundColor = color2;
+
+        // Mise à jour du timer
+        const timeValue = document.getElementById('moveTime').value;
+        document.getElementById('timeValue').textContent = timeValue;
+        document.getElementById('previewTime').textContent = timeValue;
+    }
+
+    // Gestion des presets de temps
+    function setupTimePresets() {
+        document.querySelectorAll('.time-preset').forEach(preset => {
+            preset.addEventListener('click', function() {
+                const time = this.getAttribute('data-time');
+                document.getElementById('moveTime').value = time;
+                updateLivePreview();
+            });
+        });
+    }
+
+    // Démarrage du jeu
+    function startGame() {
+        // Récupérer les valeurs directement depuis les inputs
+        const player1Name = document.getElementById('player1Name').value;
+        const player1Color = document.getElementById('player1Color').value;
+        const player2Name = document.getElementById('player2Name').value;
+        const player2Color = document.getElementById('player2Color').value;
+        const moveTime = document.getElementById('moveTime').value;
+
+        console.log('Données à envoyer:', {
+            player1Name, player1Color, player2Name, player2Color, moveTime
+        });
+
+        // Validation des couleurs différentes
+        if (player1Color === player2Color) {
+            alert('⚠ Les couleurs des joueurs doivent être différentes !');
+            return;
+        }
+
+        // Créer les données à envoyer
+        const formData = new URLSearchParams();
+        formData.append('player1Name', player1Name);
+        formData.append('player1Color', player1Color);
+        formData.append('player2Name', player2Name);
+        formData.append('player2Color', player2Color);
+        formData.append('moveTime', moveTime);
+
+        // Envoi des données de configuration
+        fetch('/api/setup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => {
+                    throw new Error(err.message || 'Erreur serveur');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Stockage du temps de coup
+                localStorage.setItem('moveTime', moveTime);
+                
+                // Redirection vers le jeu
+                window.location.href = '/game';
+            } else {
+                alert('Erreur lors de la configuration : ' + (data.message || 'Erreur inconnue'));
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('Erreur lors de la configuration du jeu: ' + error.message);
+        });
+    }
+
+    // Initialisation
+    document.addEventListener('DOMContentLoaded', function() {
+        initTheme();
+        animatePreview();
+        initSmoothScroll();
+        setupTimePresets();
+        updateLivePreview();
+        checkColorConflict();
+
+        // Écouteurs pour les mises à jour en temps réel
+        document.getElementById('player1Name').addEventListener('input', updateLivePreview);
+        document.getElementById('player2Name').addEventListener('input', updateLivePreview);
+        document.getElementById('player1Color').addEventListener('input', function() {
+            updatePlayerColor('player1', this.value);
+        });
+        document.getElementById('player2Color').addEventListener('input', function() {
+            updatePlayerColor('player2', this.value);
+        });
+        document.getElementById('moveTime').addEventListener('input', updateLivePreview);
+    });
+</script>
 </body>
 </html>
