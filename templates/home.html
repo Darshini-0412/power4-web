@@ -111,7 +111,7 @@
         <section id="playerConfigSection" class="config-section hidden">
             <div class="container">
                 <div class="config-header">
-                    <h2>⚙ Configuration de la Partie</h2>
+                    <h2>⚙️ Configuration de la Partie</h2>
                     <button class="close-config-btn" onclick="togglePlayerConfig()" aria-label="Fermer la configuration">
                         &times;
                     </button>
@@ -290,7 +290,7 @@
                                         </div>
 
                                         <div class="color-conflict hidden" id="player1-color-conflict">
-                                            <span>⚠</span>
+                                            <span>⚠️</span>
                                             <span>Cette couleur est déjà utilisée par l'autre joueur</span>
                                         </div>
                                     </div>
@@ -466,7 +466,7 @@
                                         </div>
 
                                         <div class="color-conflict hidden" id="player2-color-conflict">
-                                            <span>⚠</span>
+                                            <span>⚠️</span>
                                             <span>Cette couleur est déjà utilisée par l'autre joueur</span>
                                         </div>
                                     </div>
@@ -477,7 +477,7 @@
                         <!-- Configuration du Timer -->
                         <div class="timer-config-card">
                             <div class="timer-header">
-                                <div class="timer-icon">⏱</div>
+                                <div class="timer-icon">⏱️</div>
                                 <h3 class="timer-title">Paramètres de Temps</h3>
                             </div>
                             
@@ -528,7 +528,7 @@
                                         </div>
                                     </div>
                                     <div class="preview-timer">
-                                        ⏱ Temps par coup: <span id="previewTime">30</span>s
+                                        ⏱️ Temps par coup: <span id="previewTime">30</span>s
                                     </div>
                                 </div>
                             </div>
@@ -794,7 +794,7 @@
     function updateThemeButton(theme) {
         const themeBtn = document.querySelector('.theme-btn');
         if (themeBtn) {
-            themeBtn.innerHTML = theme === 'light' ? '🌙' : '☀';
+            themeBtn.innerHTML = theme === 'light' ? '🌙' : '☀️';
             themeBtn.setAttribute('aria-label', 
                 theme === 'light' ? 'Activer le mode sombre' : 'Activer le mode clair');
         }
@@ -1010,7 +1010,7 @@
 
         // Validation des couleurs différentes
         if (player1Color === player2Color) {
-            alert('⚠ Les couleurs des joueurs doivent être différentes !');
+            alert('⚠️ Les couleurs des joueurs doivent être différentes !');
             return;
         }
 

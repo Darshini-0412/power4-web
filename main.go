@@ -118,125 +118,125 @@ func gameHandler(w http.ResponseWriter, r *http.Request) {
 
 // setupHandler gère la configuration des joueurs
 func setupHandler(w http.ResponseWriter, r *http.Request) {
-    // Vérification que la méthode est bien POST
-    if r.Method != http.MethodPost {
-        w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusMethodNotAllowed)
-        w.Write([]byte({"success": false, "message": "Method not allowed"}))
-        return
-    }
+	// Vérification que la méthode est bien POST
+	if r.Method != http.MethodPost {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		w.Write([]byte(`{"success": false, "message": "Method not allowed"}`))
+		return
+	}
 
-    // Analyse des données du formulaire
-    if err := r.ParseForm(); err != nil {
-        log.Printf("Erreur ParseForm: %v", err)
-        w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusBadRequest)
-        w.Write([]byte({"success": false, "message": "Erreur d'analyse du formulaire"}))
-        return
-    }
+	// Analyse des données du formulaire
+	if err := r.ParseForm(); err != nil {
+		log.Printf("Erreur ParseForm: %v", err)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"success": false, "message": "Erreur d'analyse du formulaire"}`))
+		return
+	}
 
-    // DEBUG: Afficher tous les paramètres reçus
-    log.Printf("=== DEBUG FORM DATA ===")
-    for key, values := range r.Form {
-        log.Printf("  %s: %v", key, values)
-    }
-    log.Printf("=== FIN DEBUG ===")
+	// DEBUG: Afficher tous les paramètres reçus
+	log.Printf("=== DEBUG FORM DATA ===")
+	for key, values := range r.Form {
+		log.Printf("  %s: %v", key, values)
+	}
+	log.Printf("=== FIN DEBUG ===")
 
-    // Récupération des données
-    player1Name := r.FormValue("player1Name")
-    player1Color := r.FormValue("player1Color")
-    
-    player2Name := r.FormValue("player2Name")
-    player2Color := r.FormValue("player2Color")
+	// Récupération des données
+	player1Name := r.FormValue("player1Name")
+	player1Color := r.FormValue("player1Color")
 
-    log.Printf("DEBUG - player1Name: '%s'", player1Name)
-    log.Printf("DEBUG - player1Color: '%s'", player1Color)
-    log.Printf("DEBUG - player2Name: '%s'", player2Name)
-    log.Printf("DEBUG - player2Color: '%s'", player2Color)
+	player2Name := r.FormValue("player2Name")
+	player2Color := r.FormValue("player2Color")
 
-    // Si les couleurs sont vides, essayer de les récupérer différemment
-    if player1Color == "" {
-        // Essayer de récupérer depuis les valeurs du formulaire
-        if colors, ok := r.Form["player1Color"]; ok && len(colors) > 0 {
-            player1Color = colors[0]
-            log.Printf("DEBUG - player1Color récupéré depuis Form[]: '%s'", player1Color)
-        }
-    }
-    
-    if player2Color == "" {
-        if colors, ok := r.Form["player2Color"]; ok && len(colors) > 0 {
-            player2Color = colors[0]
-            log.Printf("DEBUG - player2Color récupéré depuis Form[]: '%s'", player2Color)
-        }
-    }
+	log.Printf("DEBUG - player1Name: '%s'", player1Name)
+	log.Printf("DEBUG - player1Color: '%s'", player1Color)
+	log.Printf("DEBUG - player2Name: '%s'", player2Name)
+	log.Printf("DEBUG - player2Color: '%s'", player2Color)
 
-    // Si toujours vide, utiliser les valeurs par défaut
-    if player1Color == "" {
-        player1Color = "#FF0000"
-        log.Printf("Couleur joueur 1 vide, utilisation de la valeur par défaut: %s", player1Color)
-    }
-    
-    if player2Color == "" {
-        player2Color = "#FFFF00"
-        log.Printf("Couleur joueur 2 vide, utilisation de la valeur par défaut: %s", player2Color)
-    }
+	// Si les couleurs sont vides, essayer de les récupérer différemment
+	if player1Color == "" {
+		// Essayer de récupérer depuis les valeurs du formulaire
+		if colors, ok := r.Form["player1Color"]; ok && len(colors) > 0 {
+			player1Color = colors[0]
+			log.Printf("DEBUG - player1Color récupéré depuis Form[]: '%s'", player1Color)
+		}
+	}
 
-    // Normalisation des couleurs
-    player1Color = strings.ToUpper(player1Color)
-    player2Color = strings.ToUpper(player2Color)
+	if player2Color == "" {
+		if colors, ok := r.Form["player2Color"]; ok && len(colors) > 0 {
+			player2Color = colors[0]
+			log.Printf("DEBUG - player2Color récupéré depuis Form[]: '%s'", player2Color)
+		}
+	}
 
-    log.Printf("Configuration finale - Joueur1: %s (%s), Joueur2: %s (%s)",
-        player1Name, player1Color, player2Name, player2Color)
+	// Si toujours vide, utiliser les valeurs par défaut
+	if player1Color == "" {
+		player1Color = "#FF0000"
+		log.Printf("Couleur joueur 1 vide, utilisation de la valeur par défaut: %s", player1Color)
+	}
 
-    // Validation des couleurs
-    if !isValidColor(player1Color) {
-        log.Printf("Couleur joueur 1 invalide: %s", player1Color)
-        w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusBadRequest)
-        w.Write([]byte(`{"success": false, "message": "Couleur du joueur 1 invalide: ` + player1Color + "}))
-        return
-    }
+	if player2Color == "" {
+		player2Color = "#FFFF00"
+		log.Printf("Couleur joueur 2 vide, utilisation de la valeur par défaut: %s", player2Color)
+	}
 
-    if !isValidColor(player2Color) {
-        log.Printf("Couleur joueur 2 invalide: %s", player2Color)
-        w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusBadRequest)
-        w.Write([]byte(`{"success": false, "message": "Couleur du joueur 2 invalide: ` + player2Color + "}))
-        return
-    }
+	// Normalisation des couleurs
+	player1Color = strings.ToUpper(player1Color)
+	player2Color = strings.ToUpper(player2Color)
 
-    // Validation des noms
-    if strings.TrimSpace(player1Name) == "" {
-        w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusBadRequest)
-        w.Write([]byte({"success": false, "message": "Nom du joueur 1 invalide"}))
-        return
-    }
+	log.Printf("Configuration finale - Joueur1: %s (%s), Joueur2: %s (%s)",
+		player1Name, player1Color, player2Name, player2Color)
 
-    if strings.TrimSpace(player2Name) == "" {
-        w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusBadRequest)
-        w.Write([]byte({"success": false, "message": "Nom du joueur 2 invalide"}))
-        return
-    }
+	// Validation des couleurs
+	if !isValidColor(player1Color) {
+		log.Printf("Couleur joueur 1 invalide: %s", player1Color)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"success": false, "message": "Couleur du joueur 1 invalide: ` + player1Color + `"}`))
+		return
+	}
 
-    // Validation que les couleurs sont différentes
-    if player1Color == player2Color {
-        w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusBadRequest)
-        w.Write([]byte({"success": false, "message": "Les couleurs doivent être différentes"}))
-        return
-    }
+	if !isValidColor(player2Color) {
+		log.Printf("Couleur joueur 2 invalide: %s", player2Color)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"success": false, "message": "Couleur du joueur 2 invalide: ` + player2Color + `"}`))
+		return
+	}
 
-    // Configuration des joueurs dans le jeu
-    currentGame.SetupPlayers(player1Name, player1Color, player2Name, player2Color)
+	// Validation des noms
+	if strings.TrimSpace(player1Name) == "" {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"success": false, "message": "Nom du joueur 1 invalide"}`))
+		return
+	}
 
-    // Réponse JSON de succès
-    w.Header().Set("Content-Type", "application/json")
-    w.Write([]byte({"success": true, "message": "Configuration sauvegardée"}))
+	if strings.TrimSpace(player2Name) == "" {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"success": false, "message": "Nom du joueur 2 invalide"}`))
+		return
+	}
 
-    log.Printf("Joueurs configurés avec succès: %s (%s) vs %s (%s)",
-        player1Name, player1Color, player2Name, player2Color)
+	// Validation que les couleurs sont différentes
+	if player1Color == player2Color {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"success": false, "message": "Les couleurs doivent être différentes"}`))
+		return
+	}
+
+	// Configuration des joueurs dans le jeu
+	currentGame.SetupPlayers(player1Name, player1Color, player2Name, player2Color)
+
+	// Réponse JSON de succès
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"success": true, "message": "Configuration sauvegardée"}`))
+
+	log.Printf("Joueurs configurés avec succès: %s (%s) vs %s (%s)",
+		player1Name, player1Color, player2Name, player2Color)
 }
 
 // isValidColor vérifie si une couleur est valide (format hexadécimal)
@@ -308,7 +308,7 @@ func apiPlayHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Construction manuelle du JSON pour éviter les imports supplémentaires
 	// Format: {"success": true, "lastMove": {"row": X, "col": Y}}
-	response := `{"success": true, "lastMove": {"row": ` + strconv.Itoa(currentGame.LastMove.Row) + `, "col": ` + strconv.Itoa(currentGame.LastMove.Col) + }}
+	response := `{"success": true, "lastMove": {"row": ` + strconv.Itoa(currentGame.LastMove.Row) + `, "col": ` + strconv.Itoa(currentGame.LastMove.Col) + `}}`
 
 	// Envoi de la réponse
 	w.Write([]byte(response))
