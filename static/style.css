@@ -214,27 +214,9 @@ body.page {
 }
 
 /* Grille de statistiques */
-.player-stats-grid {
-  margin-top: 0.7rem;
-  padding: 0.2rem;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
-  background: var(--bg-body);
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.35rem;
-}
 
-.stat-card {
-  display: flex;
-  align-items: center;
-  background: var(--bg-body);
-  padding: 1rem;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
-  text-align: center;
-  transition: var(--transition);
-}
+
+
 
 .stat-card:hover {
   transform: translateY(-2px);

@@ -39,23 +39,15 @@
             </div>
 
             <!-- Section Statistiques Avancées -->
-            <div class="player-stats-grid">
-                <div class="stat-card">
+           
+            <div class="stat-card">
                     <div class="stat-icon">🎯</div>
                     <div class="stat-content">
                         <span class="stat-value" id="player1Tokens">0</span>
                         <span class="stat-label">Jetons</span>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">⏱️</div>
-                    <div class="stat-content">
-                        <span class="stat-value" id="player1TimePlayed">⏳</span>
-                        <span class="stat-label">Temps</span>
-                    </div>
-                </div>
                 
-            </div>
 
             <!-- Timer Circulaire Moderne -->
             <div class="timer-section">
@@ -112,14 +104,7 @@
                     </button>
                 </div>
             </header>
-                <div class="selector-header">
-                    <span class="selector-title">Choisir une colonne</span>
-                    <div class="control-hints">
-                        <span class="hint-item">🖱️ Clic</span>
-                        <span class="hint-item">⌨️ 1-7</span>
-                        <span class="hint-item">← → Flèches</span>
-                    </div>
-                </div>
+                
                 
                 <div class="columns-grid-modern">
                     {{range $i := seq 0 6}}
@@ -187,9 +172,7 @@
                         <div class="player-avatar" style="background-color: {{.Player2.Color}};">
                             <div class="avatar-glow {{if eq .Turn "Y"}}active-glow{{end}}"></div>
                         </div>
-                        <div class="status-indicator {{if eq .Turn "Y"}}player-turn{{else}}player-waiting{{end}}">
-                            {{if eq .Turn "Y"}}🎮{{else}}⏳{{end}}
-                        </div>
+                        
                     </div>
                     <div class="player-meta">
                         <h2 class="player-name">{{.Player2.Name}}</h2>
@@ -201,7 +184,7 @@
             </div>
 
             <!-- Section Statistiques Avancées -->
-            <div class="player-stats-grid">
+            
                 <div class="stat-card">
                     <div class="stat-icon">🎯</div>
                     <div class="stat-content">
@@ -210,15 +193,9 @@
                     </div>
                 </div>
                 
-                <div class="stat-card">
-                    <div class="stat-icon">⏱️</div>
-                    <div class="stat-content">
-                        <span class="stat-value" id="player2TimePlayed">⏳</span>
-                        <span class="stat-label">Temps</span>
-                    </div>
-                </div>
                 
-            </div>
+                
+            
 
             <!-- Timer Circulaire Moderne -->
             <div class="timer-section">

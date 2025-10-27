@@ -48,7 +48,7 @@
     box-sizing: border-box;
 }
 
-.home-page {
+.page-acceuil {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: var(--bg-body);
     color: var(--text-primary);
@@ -100,7 +100,7 @@
 .main-title {
     font-size: 3.5rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #60a5fa, #f472b6);
+    background:  #a1637e;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -184,7 +184,7 @@
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    background: linear-gradient(135deg, var(--text-primary), var(--primary-blue));
+    background: linear-gradient(var(--primary-blue),#a1637e);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -219,7 +219,7 @@
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+    background: linear-gradient( #a1637e);
     color: white;
     box-shadow: var(--shadow);
 }
@@ -340,7 +340,7 @@
 .config-header h2 {
     font-size: 2.2rem;
     font-weight: 700;
-    background: linear-gradient(135deg, var(--text-primary), var(--primary-blue));
+    background: linear-gradient(var(--primary-blue),#a1637e);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
