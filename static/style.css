@@ -216,7 +216,27 @@ body.page {
 /* Grille de statistiques */
 
 
+.player-stats-grid {
+  margin-top: 0.7rem;
+  padding: 0.2rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  background: var(--bg-body);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.35rem;
+}
 
+.stat-card {
+  display: flex;
+  align-items: center;
+  background: var(--bg-body);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  text-align: center;
+  transition: var(--transition);
+}
 
 .stat-card:hover {
   transform: translateY(-2px);
@@ -629,17 +649,13 @@ body.page {
   filter: blur(2px);
 }
 
-.empty-token {
-  background: transparent;
-  border: 2px dashed rgba(255, 255, 255, 0.2);
-  box-shadow: none;
-}
+
 
 .token-placeholder {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgb(81, 73, 169);
 }
 
 /* Animation de chute améliorée - UNIQUEMENT POUR NOUVEAUX JETONS */
