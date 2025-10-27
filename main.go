@@ -1,42 +1,32 @@
 package main
 
 import (
-	"html/template" // Pour les templates HTML
-	"log"           // Pour les logs
-	"net/http"      // Pour le serveur HTTP
-	"power4/game"   // Notre package game
-	"strconv"       // Pour convertir string vers int
+	"html/template"
+	"log"
+	"net/http"
+	"power4/game"
+	"strconv"
 	"strings"
 )
 
-// currentGame est la partie en cours, stockée en mémoire du serveur
 var currentGame = game.NewGame()
 
-// main est la fonction principale qui lance le serveur HTTP
 func main() {
-	// Enregistrement des routes (URL) et de leurs fonctions de traitement
-	http.HandleFunc("/", homeHandler)            // Page d'accueil
-	http.HandleFunc("/game", gameHandler)        // Page principale du jeu
-	http.HandleFunc("/play", playHandler)        // Traitement des coups (version classique)
-	http.HandleFunc("/reset", resetHandler)      // Réinitialisation de la partie
-	http.HandleFunc("/clean", cleanHandler)      // Nettoyage du modal
-	http.HandleFunc("/api/play", apiPlayHandler) // API pour jouer un coup (AJAX)
-	http.HandleFunc("/api/setup", setupHandler)  // API pour configurer les joueurs
+	http.HandleFunc("/", homeHandler)
+	http.HandleFunc("/game", gameHandler)
+	http.HandleFunc("/play", playHandler)
+	http.HandleFunc("/reset", resetHandler)
+	http.HandleFunc("/api/play", apiPlayHandler)
+	http.HandleFunc("/api/setup", setupHandler)
 
-	// Servir les fichiers statiques (CSS, JS, images) depuis le dossier "static"
-	// StripPrefix enlève "/static/" du chemin pour trouver le fichier
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	// Démarrage du serveur sur le port 8080
 	log.Println("Serveur lancé sur http://localhost:8080")
 
-	// Lancement du serveur, bloquant jusqu'à arrêt
-	// ListenAndServe écoute sur le port 8080 et sert les requêtes
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-// reverseGrid inverse l'ordre des lignes pour l'affichage
-// La grille est stockée ligne 0=en bas, mais affichée ligne 0=en haut
 func reverseGrid(grid [][]string) [][]string {
 	reversed := make([][]string, len(grid))
 	for i := range grid {
@@ -45,9 +35,8 @@ func reverseGrid(grid [][]string) [][]string {
 	return reversed
 }
 
-// homeHandler gère la page d'accueil
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	// Si on est déjà sur la page de jeu, rediriger
+
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
@@ -92,7 +81,6 @@ func gameHandler(w http.ResponseWriter, r *http.Request) {
 		winner = "Draw"
 	}
 
-	// Récupération des informations des joueurs pour le template
 	player1 := currentGame.Player1
 	player2 := currentGame.Player2
 
@@ -126,7 +114,6 @@ func setupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Analyse des données du formulaire
 	if err := r.ParseForm(); err != nil {
 		log.Printf("Erreur ParseForm: %v", err)
 		w.Header().Set("Content-Type", "application/json")
@@ -135,7 +122,6 @@ func setupHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// DEBUG: Afficher tous les paramètres reçus
 	log.Printf("=== DEBUG FORM DATA ===")
 	for key, values := range r.Form {
 		log.Printf("  %s: %v", key, values)
@@ -154,9 +140,7 @@ func setupHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("DEBUG - player2Name: '%s'", player2Name)
 	log.Printf("DEBUG - player2Color: '%s'", player2Color)
 
-	// Si les couleurs sont vides, essayer de les récupérer différemment
 	if player1Color == "" {
-		// Essayer de récupérer depuis les valeurs du formulaire
 		if colors, ok := r.Form["player1Color"]; ok && len(colors) > 0 {
 			player1Color = colors[0]
 			log.Printf("DEBUG - player1Color récupéré depuis Form[]: '%s'", player1Color)
@@ -170,7 +154,6 @@ func setupHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Si toujours vide, utiliser les valeurs par défaut
 	if player1Color == "" {
 		player1Color = "#FF0000"
 		log.Printf("Couleur joueur 1 vide, utilisation de la valeur par défaut: %s", player1Color)
@@ -181,7 +164,6 @@ func setupHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Couleur joueur 2 vide, utilisation de la valeur par défaut: %s", player2Color)
 	}
 
-	// Normalisation des couleurs
 	player1Color = strings.ToUpper(player1Color)
 	player2Color = strings.ToUpper(player2Color)
 
@@ -231,7 +213,6 @@ func setupHandler(w http.ResponseWriter, r *http.Request) {
 	// Configuration des joueurs dans le jeu
 	currentGame.SetupPlayers(player1Name, player1Color, player2Name, player2Color)
 
-	// Réponse JSON de succès
 	w.Header().Set("Content-Type", "application/json")
 	w.Write([]byte(`{"success": true, "message": "Configuration sauvegardée"}`))
 
@@ -239,13 +220,11 @@ func setupHandler(w http.ResponseWriter, r *http.Request) {
 		player1Name, player1Color, player2Name, player2Color)
 }
 
-// isValidColor vérifie si une couleur est valide (format hexadécimal)
 func isValidColor(color string) bool {
 	if color == "" {
 		return false
 	}
 
-	// Accepter les formats: #RGB, #RRGGBB
 	if len(color) != 7 && len(color) != 4 {
 		return false
 	}
@@ -254,7 +233,6 @@ func isValidColor(color string) bool {
 		return false
 	}
 
-	// Vérifier que chaque caractère est un chiffre hexadécimal
 	colorPart := color[1:]
 	for _, char := range colorPart {
 		if !((char >= '0' && char <= '9') ||
@@ -267,72 +245,57 @@ func isValidColor(color string) bool {
 	return true
 }
 
-// apiPlayHandler gère les coups joués via AJAX
-// Retourne du JSON au lieu de rediriger vers une page HTML
 func apiPlayHandler(w http.ResponseWriter, r *http.Request) {
-	// Vérification que la méthode est bien POST
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return // Arrête le traitement
+		return
 	}
 
-	// Analyse des données du formulaire
 	r.ParseForm()
-	colStr := r.FormValue("column")  // Récupère la colonne comme string
-	col, err := strconv.Atoi(colStr) // Convertit en int
+	colStr := r.FormValue("column")
+	col, err := strconv.Atoi(colStr)
 
-	// Vérification de la validité de la colonne
 	if err != nil || col < 0 || col >= 7 {
 		http.Error(w, "Colonne invalide", http.StatusBadRequest)
-		return // Colonne doit être entre 0 et 6
+		return
 	}
 
-	// Vérification que la partie n'est pas déjà terminée
 	if currentGame.CheckWinner() != "" || currentGame.IsDraw() {
 		http.Error(w, "Partie terminée", http.StatusBadRequest)
-		return // On ne peut pas jouer si partie finie
+		return
 	}
 
 	// Tentative de jouer le coup
 	success := currentGame.PlayMove(col)
 	if !success {
 		http.Error(w, "Colonne pleine", http.StatusBadRequest)
-		return // La colonne est pleine
+		return
 	}
 
-	// Log du coup joué
 	log.Println("Coup joué via API dans la colonne :", col)
 
-	// Préparation de la réponse JSON
 	w.Header().Set("Content-Type", "application/json")
 
-	// Construction manuelle du JSON pour éviter les imports supplémentaires
-	// Format: {"success": true, "lastMove": {"row": X, "col": Y}}
 	response := `{"success": true, "lastMove": {"row": ` + strconv.Itoa(currentGame.LastMove.Row) + `, "col": ` + strconv.Itoa(currentGame.LastMove.Col) + `}}`
 
-	// Envoi de la réponse
 	w.Write([]byte(response))
 }
 
-// playHandler gère les coups joués via formulaire classique (fallback)
-// Redirige vers la page principale après le coup
+// playHandler gère les coups joués
 func playHandler(w http.ResponseWriter, r *http.Request) {
-	// Vérification que c'est bien une requête POST
-	if r.Method == http.MethodPost {
-		// Analyse des données du formulaire
-		r.ParseForm()
-		colStr := r.FormValue("column")  // Colonne choisie
-		col, err := strconv.Atoi(colStr) // Conversion en int
 
-		// Si colonne valide, joue le coup
+	if r.Method == http.MethodPost {
+
+		r.ParseForm()
+		colStr := r.FormValue("column")
+		col, err := strconv.Atoi(colStr)
+
 		if err == nil && col >= 0 && col < 7 {
 			currentGame.PlayMove(col) // Joue le coup
 			log.Println("Coup joué dans la colonne :", col)
 		}
 	}
 
-	// Redirection vers la page principale pour voir le résultat
-	// StatusSeeOther = 303, force le rechargement
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
@@ -345,9 +308,7 @@ func resetHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/game", http.StatusSeeOther)
 }
 
-// AJOUTEZ cette nouvelle route pour "nettoyer" le modal
 func cleanHandler(w http.ResponseWriter, r *http.Request) {
-	// Réinitialiser le jeu et rediriger vers l'accueil
 	currentGame = game.NewGame()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
