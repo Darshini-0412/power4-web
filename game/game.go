@@ -2,7 +2,7 @@ package game
 
 import "log"
 
-// Player représente un joueur
+// Player représente un joueurgit br
 type Player struct {
 	Name   string
 	Color  string
